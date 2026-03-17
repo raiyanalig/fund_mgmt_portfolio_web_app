@@ -1,4 +1,4 @@
-# RebalancePro — Portfolio Rebalancing Application
+# RebalancePro  Portfolio Rebalancing Application
 
 A full-stack web application to compare a client's mutual fund portfolio against a model portfolio and calculate rebalancing recommendations.
 
