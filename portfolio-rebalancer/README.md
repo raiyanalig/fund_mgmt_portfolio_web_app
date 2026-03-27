@@ -68,4 +68,4 @@ npm start        # starts on http://localhost:3000
 | HDFC Mid Cap Opportunities | ₹0 | 15% | BUY |
 | Parag Parikh Flexi Cap Fund | ₹2,95,000 | 15% | SELL |
 | ICICI Pru Short Term Debt Fund | ₹1,95,000 | 15% | BUY |
-| Axis Bluechip Fund | ₹90,000 | (not in model) | REVIEW |
+
