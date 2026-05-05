@@ -12,14 +12,7 @@ function getAction(drift, isModelFund) {
   return "HOLD";
 }
 
-/**
- * Core rebalancing calculation.
- *
- * @param {Array} modelFunds   
- * @param {Array} holdings    
- * @returns {Object}          
 
- */
 function calculateRebalancing(modelFunds, holdings) {
  
   const totalPortfolioValue = holdings.reduce(
@@ -42,10 +35,15 @@ function calculateRebalancing(modelFunds, holdings) {
     modelFunds.map((f) => [f.fund_name.trim().toLowerCase(), f])
   );
 
+
  
   const coveredHoldings = new Set();
 
   
+
+  const coveredHoldings = new Set();
+
+
   const items = modelFunds.map((mf) => {
     const key = mf.fund_name.trim().toLowerCase();
     const holding = holdings.find(
@@ -104,7 +102,10 @@ function calculateRebalancing(modelFunds, holdings) {
 
   const allItems = [...items, ...reviewItems];
 
+
   
+
+
   const totalToBuy = round(
     allItems
       .filter((i) => i.action === "BUY")
