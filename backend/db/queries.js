@@ -72,7 +72,7 @@ const queries = {
     SELECT * FROM rebalance_sessions WHERE session_id = ?
   `,
 
-  // ── REBALANCE ITEMS ───────────────────────────────────────────────────
+  
   insertRebalanceItem: `
     INSERT INTO rebalance_items
       (session_id, fund_id, fund_name, action, amount, current_pct, target_pct, post_rebalance_pct, is_model_fund)

@@ -21,7 +21,7 @@ function getAction(drift, isModelFund) {
 
  */
 function calculateRebalancing(modelFunds, holdings) {
-  // Step 1: Total portfolio value includes ALL holdings
+ 
   const totalPortfolioValue = holdings.reduce(
     (sum, h) => sum + h.current_value,
     0
@@ -42,10 +42,10 @@ function calculateRebalancing(modelFunds, holdings) {
     modelFunds.map((f) => [f.fund_name.trim().toLowerCase(), f])
   );
 
-  // Step 3: Track which holdings are covered by the model
+ 
   const coveredHoldings = new Set();
 
-  // Step 4: Process model funds (including those with ₹0 in holdings)
+  
   const items = modelFunds.map((mf) => {
     const key = mf.fund_name.trim().toLowerCase();
     const holding = holdings.find(
@@ -60,12 +60,11 @@ function calculateRebalancing(modelFunds, holdings) {
     const drift = round(targetPct - currentPct);
     const action = getAction(drift, true);
 
-    // Amount to buy/sell in ₹
-    // drift / 100 converts % back to a decimal multiplier
+   
     const rawAmount = (drift / 100) * totalPortfolioValue;
     const amount = round(Math.abs(rawAmount));
 
-    // Post-rebalance % will equal target % (for model funds)
+   
     const postRebalancePct = action === "HOLD" ? currentPct : targetPct;
 
     return {
@@ -83,7 +82,7 @@ function calculateRebalancing(modelFunds, holdings) {
     };
   });
 
-  // Step 5: Process holdings NOT in the model → REVIEW
+
   const reviewItems = holdings
     .filter((h) => !coveredHoldings.has(h.holding_id))
     .map((h) => {
@@ -96,7 +95,7 @@ function calculateRebalancing(modelFunds, holdings) {
         amount: 0,
         current_pct: currentPct,
         target_pct: 0,
-        drift: round(-currentPct), // entire allocation is "excess"
+        drift: round(-currentPct), 
         post_rebalance_pct: currentPct,
         is_model_fund: false,
         current_value: h.current_value,
@@ -105,7 +104,7 @@ function calculateRebalancing(modelFunds, holdings) {
 
   const allItems = [...items, ...reviewItems];
 
-  // Step 6: Aggregate totals
+  
   const totalToBuy = round(
     allItems
       .filter((i) => i.action === "BUY")
@@ -129,10 +128,7 @@ function calculateRebalancing(modelFunds, holdings) {
   };
 }
 
-/**
- * Validate that model fund percentages sum to exactly 100%.
- * Returns { valid: boolean, sum: number }
- */
+
 function validateModelAllocations(funds) {
   const sum = round(funds.reduce((acc, f) => acc + f.allocation_pct, 0));
   return { valid: sum === 100, sum };

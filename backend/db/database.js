@@ -100,14 +100,14 @@ function seedDb() {
     fundIds[fund.name] = r.lastInsertRowid;
   }
 
-  // Seed client holdings (drifted from model)
+ 
   const holdings = [
     { name: "HDFC Nifty 50 Index Fund", value: 580000 },
     { name: "Mirae Asset Large Cap Fund", value: 340000 },
-    { name: "HDFC Mid Cap Opportunities", value: 0 },          // Edge case: ₹0
+    { name: "HDFC Mid Cap Opportunities", value: 0 },         
     { name: "Parag Parikh Flexi Cap Fund", value: 295000 },
     { name: "ICICI Pru Short Term Debt Fund", value: 195000 },
-    { name: "Axis Bluechip Fund", value: 90000 },               // Edge case: not in model
+    { name: "Axis Bluechip Fund", value: 90000 },              
   ];
 
   const holdingStmt = db.prepare(

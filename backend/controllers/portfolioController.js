@@ -5,8 +5,7 @@ const {
   validateModelAllocations,
 } = require("./portfolioCalculator");
 
-// ── GET /api/portfolio/rebalance ─────────────────────────────────────────────
-// Returns full rebalancing recommendation for the default client.
+
 function getRebalanceRecommendation(req, res) {
   let db;
   try {
@@ -42,8 +41,7 @@ function getRebalanceRecommendation(req, res) {
   }
 }
 
-// ── GET /api/portfolio/holdings ──────────────────────────────────────────────
-// Returns client holdings with portfolio percentage for each fund.
+
 function getHoldings(req, res) {
   let db;
   try {
@@ -82,8 +80,7 @@ function getHoldings(req, res) {
   }
 }
 
-// ── GET /api/portfolio/model ──────────────────────────────────────────────────
-// Returns model fund allocations.
+
 function getModelFunds(req, res) {
   let db;
   try {
@@ -98,9 +95,7 @@ function getModelFunds(req, res) {
   }
 }
 
-// ── PUT /api/portfolio/model ──────────────────────────────────────────────────
-// Updates allocation percentages for model funds.
-// Body: { funds: [{ fund_id, allocation_pct }] }
+
 function updateModelFunds(req, res) {
   let db;
   try {
@@ -110,7 +105,6 @@ function updateModelFunds(req, res) {
       return res.status(400).json({ error: "funds array is required" });
     }
 
-    // Validate sum BEFORE writing to DB
     const { valid, sum } = validateModelAllocations(funds);
     if (!valid) {
       return res.status(422).json({
@@ -120,7 +114,7 @@ function updateModelFunds(req, res) {
 
     db = getDb();
 
-    // Use a transaction so either ALL updates succeed or NONE do
+    
     const updateStmt = db.prepare(queries.updateModelFundAllocation);
     const transaction = db.transaction((fundList) => {
       for (const f of fundList) {
@@ -139,8 +133,7 @@ function updateModelFunds(req, res) {
   }
 }
 
-// ── POST /api/portfolio/rebalance/save ────────────────────────────────────────
-// Saves a rebalancing session and its line items.
+
 function saveRebalanceSession(req, res) {
   let db;
   try {
@@ -210,8 +203,7 @@ function saveRebalanceSession(req, res) {
   }
 }
 
-// ── GET /api/portfolio/history ────────────────────────────────────────────────
-// Returns all rebalance sessions for the client.
+
 function getRebalanceHistory(req, res) {
   let db;
   try {
@@ -233,8 +225,7 @@ function getRebalanceHistory(req, res) {
   }
 }
 
-// ── GET /api/portfolio/history/:sessionId ─────────────────────────────────────
-// Returns items for a specific session.
+
 function getSessionItems(req, res) {
   let db;
   try {
@@ -254,8 +245,7 @@ function getSessionItems(req, res) {
   }
 }
 
-// ── PATCH /api/portfolio/history/:sessionId/status ────────────────────────────
-// Updates session status (PENDING → APPLIED / DISMISSED).
+
 function updateSessionStatus(req, res) {
   let db;
   try {
